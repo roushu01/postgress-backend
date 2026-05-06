@@ -1,15 +1,10 @@
-const pg=require("pg")
+const {Pool}=require("pg")
 
-const Connect=async()=>{
-    const client=new pg.Client({
-        host:"localhost",
-        port:process.env.PORT_NUM,
-        user:"postgres",
-        password:"root",
-        database:"office-demo-backend"
-    })
-    await client.connect()
-    console.log("Connected to PostgreSQL database")
-    return client
-}
-module.exports=Connect
+const pool=new Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+        rejectUnauthorized: false   // 🔥 required for Render
+    }
+});
+
+module.exports=pool

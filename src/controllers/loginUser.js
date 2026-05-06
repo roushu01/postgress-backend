@@ -1,10 +1,10 @@
-const connect=require("../config/db")
+const pool=require("../config/db")
 const bcrypt=require("bcrypt")
 const loginUser=async(req,res)=>{
     console.log(req.body)
     const {name,password}=req.body
     
-    const client=await connect()
+    const client=await pool()
     try{
         
     const result=await client.query('SELECT * FROM users WHERE name=$1',[name])
